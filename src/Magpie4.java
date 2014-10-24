@@ -57,10 +57,6 @@ public class Magpie4
         {
             response = transformIWantSomethingStatement(statement);
         }
-        else if(findKeyword(statement, "I " + " you", 0) >= 0)
-        {
-            response = transformISomethingYouStatement(statement);
-        }
 
 		else
 		{
@@ -72,10 +68,16 @@ public class Magpie4
 			{
 				response = transformYouMeStatement(statement);
 			}
+
 			else
 			{
 				response = getRandomResponse();
 			}
+            int hi = findKeyword(statement, "I", 0);
+            if(hi >= 0 && findKeyword(statement, "you", psn) >= 0)
+            {
+                response = transformISomethingYouStatement(statement);
+            }
 		}
 		return response;
 	}
@@ -126,8 +128,9 @@ public class Magpie4
             statement = statement.substring(0, statement
                     .length() - 1);
         }
-        int psn = findKeyword (statement, statement.substring(2, statement.length() - 4), 0);
-        return "Why do you " + psn + "  me" + "?";
+        int hi = findKeyword (statement, statement.substring(statement.length() - 4), 0);
+        String midofStatement = statement.substring(hi + 2, statement.length() - 4).trim();
+        return "Why do you " + midofStatement + "  me" + "?";
     }
 	
 	
